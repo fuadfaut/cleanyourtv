@@ -19,3 +19,10 @@ traces/
 *.aab
 launcher/hs_err_pid*.log
 launcher/replay_pid*.log
+
+# Flashing tools, binary toolchains and recovery parameters
+tools/platform-tools/
+tools/aml-flash-tool/
+factory_update_param.aml
+*.aml
+

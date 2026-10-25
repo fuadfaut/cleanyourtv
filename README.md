@@ -30,6 +30,42 @@ until the 19th; old links work.
 
 **Themes, switches and add-ons:** [cleanyour.tv/addons](https://cleanyour.tv/addons)
 
+---
+
+## 📺 Custom Build: Fiberhome HG680-P (Amlogic S905X)
+
+<p align="center">
+  <img src="docs/devices/fiberhome-hg680p.jpg" alt="FiberHome HG680-P Android Smart TV Box" width="650">
+</p>
+
+Repositori ini telah dikustomisasi dan dioptimalkan secara mendalam untuk perangkat STB **Fiberhome HG680-P** (Board `p212`, SoC Amlogic S905X, Pulpstone Android 6.0.1 Marshmallow, Kernel Linux 3.14.29, RAM 2GB).
+
+### ✨ Fitur Utama Kustomisasi STB HG680-P
+
+1. **Web Remote Responsif (`fastkey v3`)**:
+   - Web controller berbasis HTML5/JS yang di-host langsung dari STB di port 8080 (`http://<IP_STB>:8080`).
+   - Latensi instan **~30 ms** menggunakan injeksi langsung Linux event binary `/dev/input/event*` (jauh lebih responsif daripada `input keyevent` Android standar).
+   - Dilengkapi **Virtual Text Keyboard**: mengetik pencarian di TV langsung dari HP tanpa repot memilih huruf satu per satu.
+   - Deteksi IP Dinamis otomatis: alamat IP STB selalu sinkron meskipun router berganti DHCP.
+
+2. **Kiosk Billing & Rental System**:
+   - Sistem sewa berbasis durasi waktu otomatis (preset tombol 30m, 1j, 2j, 3j, custom menit, dan mode **Unlimited**).
+   - Tampilan layar kunci otomatis saat durasi sewa berakhir: *"WAKTU HABIS — Istirahatlah yang cukup"*.
+   - Aplikasi kiosk tersembunyi dan terlindungi PIN untuk mencegah pengguna keluar ke pengaturan sistem tanpa izin.
+
+3. **CloudStream 4.8.0 TV Leanback Integration**:
+   - Dioptimalkan khusus untuk Android 6.0.1 Marshmallow.
+   - **Patch Native BoringSSL / Conscrypt**: Memperbaiki issue crash fatal `SIGABRT` pada syscall `sys_getrandom` di kernel Linux 3.14.29 lama dengan fallback `/dev/urandom`.
+   - **Anti-Reset Reboot Protection**: Penguncian sistem `chattr +i` dan auto-restore di `/system/etc/install-recovery-2.sh` agar file patch tidak tertimpa saat STB direstart.
+   - Dilengkapi **MegaRepo** dan repositori Indonesia (**Idlix**, provider anime, drakor, dan film).
+
+4. **Dokumentasi Lengkap**:
+   - 📖 [Panduan Remote & Billing (REMOTE_BILLING.md)](REMOTE_BILLING.md) — Panduan pengoperasian web remote, billing rental, dan konfigurasi CloudStream.
+   - 🛠️ [Panduan Pemulihan HG680-P (PANDUAN_PEMULIHAN_HG680P.md)](PANDUAN_PEMULIHAN_HG680P.md) — Panduan unbrick, flashing Amlogic USB Burning Tool (UBT), dan pembuatan Bootcard SD Card.
+
+---
+
+
 ## How it works
 
 Android TVs have the same debug bridge as Android phones. Switch on USB debugging in the TV's
