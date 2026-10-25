@@ -186,3 +186,15 @@ Untuk mempermudah pengisian repositori tanpa repot mengetik di TV, gunakan fitur
    https://raw.githubusercontent.com/hexated/cloudstream-extensions-hexated/builds/repo.json
    ```
 
+### C. Solusi Pemulihan jika Ikon CloudStream Hilang Pasca Hard Power-Off / Cabut Adaptor
+* **Penyebab**:
+  Jika STB dimatikan paksa (misalnya dicabut adaptornya tanpa shutdown normal), database paket sistem Android Marshmallow (`packages.xml`) belum sempat disinkronkan ke flash disk. Saat menyala kembali, `PackageManager` mendeteksi paket dalam status parsing belum tuntas (`pkg=null`) sehingga ikonnya tidak muncul di launcher TV Home. File instalasi (`base.apk`) dan data konfigurasi/ekstensi sebenarnya masih aman 100% di storage internal.
+* **Langkah Pemulihan Cepat via ADB**:
+  Jalankan perintah berikut melalui ADB (tanpa menghapus data tontonan & konfigurasi):
+  ```sh
+  ./tools/platform-tools/adb shell "pm install -r -d \$(ls /data/app/com.lagradost.cloudstream3*/base.apk)"
+  ```
+* **Proteksi Otomatis (`install-recovery-2.sh`)**:
+  Skrip startup `/system/etc/install-recovery-2.sh` telah dioptimalkan dengan pola dinamis (`/data/app/com.lagradost.cloudstream3*`). Baik sistem meletakkan file di subfolder `-1` maupun `-2`, skrip akan otomatis memasang patch `libconscrypt_jni.so` dan menguncinya dengan `chattr +i` saat STB dinyalakan.
+
+
