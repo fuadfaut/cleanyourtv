@@ -186,15 +186,17 @@ Untuk mempermudah pengisian repositori tanpa repot mengetik di TV, gunakan fitur
    https://raw.githubusercontent.com/hexated/cloudstream-extensions-hexated/builds/repo.json
    ```
 
-### C. Solusi Pemulihan jika Ikon CloudStream Hilang Pasca Hard Power-Off / Cabut Adaptor
-* **Penyebab**:
-  Jika STB dimatikan paksa (misalnya dicabut adaptornya tanpa shutdown normal), database paket sistem Android Marshmallow (`packages.xml`) belum sempat disinkronkan ke flash disk. Saat menyala kembali, `PackageManager` mendeteksi paket dalam status parsing belum tuntas (`pkg=null`) sehingga ikonnya tidak muncul di launcher TV Home. File instalasi (`base.apk`) dan data konfigurasi/ekstensi sebenarnya masih aman 100% di storage internal.
-* **Langkah Pemulihan Cepat via ADB**:
-  Jalankan perintah berikut melalui ADB (tanpa menghapus data tontonan & konfigurasi):
-  ```sh
-  ./tools/platform-tools/adb shell "pm install -r -d \$(ls /data/app/com.lagradost.cloudstream3*/base.apk)"
-  ```
-* **Proteksi Otomatis (`install-recovery-2.sh`)**:
-  Skrip startup `/system/etc/install-recovery-2.sh` telah dioptimalkan dengan pola dinamis (`/data/app/com.lagradost.cloudstream3*`). Baik sistem meletakkan file di subfolder `-1` maupun `-2`, skrip akan otomatis memasang patch `libconscrypt_jni.so` dan menguncinya dengan `chattr +i` saat STB dinyalakan.
+### C. Solusi Permanen Anti-Hilang: Integrasi System App (`/system/app/CloudStream`)
+* **Akar Masalah Hilang saat Reboot/Mati Listrik**:
+  - Pada Android 6.0 Marshmallow, setiap kali *boot*, `PackageManagerService` (PMS) otomatis mengekstrak library bawaan untuk aplikasi di `/data/app` (`extractLibs = true`).
+  - Patch sebelumnya menggunakan atribut `chattr +i` pada `libconscrypt_jni.so` agar tidak tertimpa. Namun, `+i` justru memblokir rutin `NativeLibraryHelper` Android saat booting dengan galat fatal `Error unpackaging native libs for app, errorCode=-18`.
+  - Akibatnya, PMS membatalkan *load* paket (`pkg=null`) dan CloudStream lenyap dari daftar aplikasi serta launcher pada setiap *reboot*.
+* **Solusi Permanen (System App)**:
+  - CloudStream dipindahkan menjadi **System App** di `/system/app/CloudStream/CloudStream.apk`.
+  - Seluruh pustaka native (termasuk patch `libconscrypt_jni.so`) diletakkan langsung di `/system/app/CloudStream/lib/arm/`.
+  - Untuk System App, Android menerapkan aturan `extractLibs = false` (tidak pernah diekstrak ulang saat boot), partisi `/system` berstatus *read-only* (kebal korupsi disk saat mati listrik mendadak), dan tidak memerlukan trik `chattr +i` yang bermasalah.
+  - Data tontonan, riwayat, dan repositori ekstensi tetap tersimpan aman di `/data/data/com.lagradost.cloudstream3/`.
+  - Hasil: CloudStream **100% stabil, tidak pernah hilang, dan langsung siap dipakai setiap kali STB dinyalakan**.
+
 
 

@@ -22,8 +22,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Hidden Kiosk application with PIN-protected unlock to prevent tampering or escaping into Android settings.
 - **CloudStream 4.8.0 TV Leanback Integration & Fixes**:
   - Native binary patch for `libconscrypt_jni.so` (BoringSSL) fixing fatal `SIGABRT` crash caused by syscall 384 (`sys_getrandom`) on Linux kernel 3.14.29 by forcing clean fallback to `/dev/urandom`.
-  - Dynamic anti-reset reboot protection: `/system/etc/install-recovery-2.sh` automatically discovers dynamic `/data/app/com.lagradost.cloudstream3*` directory structures across reinstalls/updates and reapplies `chattr +i` protected library.
-  - Added fast non-destructive recovery procedure for unexpected power cut / hard shut-off recovery where `packages.xml` parsing drops registration.
+  - Converted CloudStream to permanent **System App** (`/system/app/CloudStream/`) with native libraries directly in `/system/app/CloudStream/lib/arm/`, completely eliminating PackageManager `errorCode=-18` boot scan failures caused by immutable attributes on `/data/app`.
+  - 100% resilient across hard power-offs, abrupt power cuts, and cold reboots on read-only `/system`.
   - Pre-installed **Mega repository** and Indonesian streaming repository (**Idlix**, anime, drama, and movies).
   - TV Leanback layout configured with shortcut pinned to CleanYourTV dock.
 - **Documentation**:
