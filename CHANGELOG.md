@@ -4,6 +4,16 @@ All notable changes to the CleanYourTV - Fiberhome HG680-P custom build will be 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Custom HG680-P Fixes] - 2026-10-26
+
+### Fixed
+- **CloudStream Boot-Persistence & Anti-Disappear**:
+  - Resolved fatal `PackageManager: Error unpackaging native libs for app, errorCode=-18` error that caused CloudStream to be dropped (`pkg=null`) by Android's package manager on reboot.
+  - Converted CloudStream into a permanent **System App** at `/system/app/CloudStream/CloudStream.apk`.
+  - Placed all 11 native ARM libraries (including the custom BoringSSL `libconscrypt_jni.so` patch) directly into `/system/app/CloudStream/lib/arm/`.
+  - Leveraged Android's native `extractLibs = false` handling for read-only `/system` apps, guaranteeing complete immunity to disk corruption from abrupt power cuts and eliminating the need for `chattr +i`.
+  - Verified persistence across multiple consecutive cold reboots with full preservation of user data and streaming repositories in `/data/data/com.lagradost.cloudstream3/`.
+
 ## [Custom HG680-P Edition] - 2026-10-25
 
 ### Added
