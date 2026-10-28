@@ -198,5 +198,16 @@ Untuk mempermudah pengisian repositori tanpa repot mengetik di TV, gunakan fitur
   - Data tontonan, riwayat, dan repositori ekstensi tetap tersimpan aman di `/data/data/com.lagradost.cloudstream3/`.
   - Hasil: CloudStream **100% stabil, tidak pernah hilang, dan langsung siap dipakai setiap kali STB dinyalakan**.
 
+### D. Pemulihan Provider Idlix & Sertifikat CA Modern (Let's Encrypt ISRG Root X1)
+* **Penyebab Idlix Tidak Bisa Diakses**:
+  1. **Cloudflare WAF Bot Protection**: Domain backend Idlix (`z2.idlixku.com`) menolak request yang tidak menyertakan header `User-Agent` browser (`HTTP 403 / Cloudflare Challenge`). Pada extension bawaan, `apiHeaders` tidak menyertakan User-Agent sehingga diblokir Cloudflare.
+  2. **Kadaluarsa Sertifikat CA Android 6.0**: Android 6.0 tidak memiliki sertifikat `ISRG Root X1` (Let's Encrypt) di `/system/etc/security/cacerts/`, menyebabkan poster film dari `image.tmdb.org` gagal dimuat (`CertPathValidatorException: Trust anchor for certification path not found`).
+* **Langkah Perbaikan yang Diterapkan**:
+  - Bytecode ekstensi `Idlix.cs3` dipatch untuk selalu menyuntikkan header browser Chrome modern pada seluruh API call.
+  - Ekstensi dikunci pada versi 99 di `manifest.json` agar tidak tertimpa otomatis oleh auto-update repo yang belum diperbaiki.
+  - Sertifikat `ISRG Root X1` (`6187b673.0`) dan `ISRG Root X2` (`8794b4e3.0`) dipasang permanen ke partisi sistem `/system/etc/security/cacerts/` sehingga seluruh koneksi HTTPS Let's Encrypt & poster TMDB valid secara global di STB.
+
+
+
 
 

@@ -4,6 +4,17 @@ All notable changes to the CleanYourTV - Fiberhome HG680-P custom build will be 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Custom HG680-P Fixes] - 2026-10-28
+
+### Fixed
+- **Idlix Provider & Cloudflare Challenge Bypass**:
+  - Investigated Idlix outage on CloudStream: discovered that `z2.idlixku.com` Cloudflare WAF drops OkHttp requests without a browser `User-Agent` (`HTTP 403 / Cloudflare Challenge`).
+  - Patched `Idlix.cs3` extension bytecode to inject desktop Chrome `User-Agent` header into all Next.js API calls (`/api/movies`, `/api/series`, `/api/search`, `/api/watch/session/claim`), restoring instant `HTTP 200 OK` JSON responses.
+  - Locked patched extension at `version: 99` in `manifest.json` to prevent automatic downgrading by CloudStream plugin manager.
+- **System-Wide Let's Encrypt CA Root Certificate (`ISRG Root X1` & `X2`)**:
+  - Resolved `CertPathValidatorException: Trust anchor for certification path not found` which broke TMDB poster image loading (`image.tmdb.org`) and Let's Encrypt stream sources on Android 6.0 Marshmallow.
+  - Installed `6187b673.0` (ISRG Root X1) and `8794b4e3.0` (ISRG Root X2) into `/system/etc/security/cacerts/` with root permissions.
+
 ## [Custom HG680-P Fixes] - 2026-10-26
 
 ### Fixed
