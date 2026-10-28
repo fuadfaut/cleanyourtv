@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Custom HG680-P Fixes] - 2026-10-28
 
+### Added
+- **Multi-Layered Family Protection & Vulgar Content Filtering**:
+  - **Smart Extension Filter**: Injected bytecode filters into `Idlix`, `LK21`, and `PusatFilm` extensions that automatically detect and drop adult/vulgar keywords (e.g. `18+`, `semi`, `erotic`, `adult`, `sensual`, `sex`, `bokep`, `porno`, `ecchi`, `hentai`, `vulgar`, `xxx`, `uncensored`, `jav`, `fetish`, `lust`, `orgasm`, `taboo`, `seduction`, `bikini`, `stripper`, `playboy`) from Home sections, search results, and category feeds.
+  - **Network-Level Cloudflare Family DNS**: Configured system DNS to `1.1.1.3` and `1.0.0.3` (Cloudflare 1.1.1.3 for Families) in `/system/etc/install-recovery-2.sh` with iptables port 53 NAT redirection to block malware and adult websites at the network socket level.
+
 ### Fixed
 - **Idlix Provider & Cloudflare Challenge Bypass**:
   - Investigated Idlix outage on CloudStream: discovered that `z2.idlixku.com` Cloudflare WAF drops OkHttp requests without a browser `User-Agent` (`HTTP 403 / Cloudflare Challenge`).

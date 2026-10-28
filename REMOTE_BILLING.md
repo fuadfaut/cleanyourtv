@@ -207,6 +207,19 @@ Untuk mempermudah pengisian repositori tanpa repot mengetik di TV, gunakan fitur
   - Ekstensi dikunci pada versi 99 di `manifest.json` agar tidak tertimpa otomatis oleh auto-update repo yang belum diperbaiki.
   - Sertifikat `ISRG Root X1` (`6187b673.0`) dan `ISRG Root X2` (`8794b4e3.0`) dipasang permanen ke partisi sistem `/system/etc/security/cacerts/` sehingga seluruh koneksi HTTPS Let's Encrypt & poster TMDB valid secara global di STB.
 
+### E. Fitur Perlindungan Keluarga & Penyaringan Konten Vulgar / 18+
+Untuk menjaga keamanan tayangan pada STB keluarga atau anak-anak, telah diterapkan sistem proteksi berlapis:
+1. **Smart Extension Keyword & Genre Filter**:
+   - Ekstensi streaming utama (`Idlix`, `LK21`, dan `PusatFilm`) telah disuntikkan filter biner cerdas pada fungsi pengurai respon (`toSearchResponse` dan `getApiSection`).
+   - Setiap judul, URL/slug, atau tag yang mengandung kata kunci dewasa/vulgar (seperti: `18+`, `semi`, `dewasa`, `erotic`, `erotis`, `adult`, `sensual`, `sex`, `bokep`, `porno`, `porn`, `ecchi`, `hentai`, `vulgar`, `xxx`, `uncensored`, `jav`, `fetish`, `lust`, `orgasm`, `taboo`, `seduction`, `bikini`, `stripper`, `playboy`) akan **otomatis dieliminasi (dibuang)** dari tampilan Beranda dan hasil Pencarian.
+2. **DNS Tingkat Jaringan (Cloudflare 1.1.1.3 Family Protection)**:
+   - STB dikonfigurasikan menggunakan DNS `1.1.1.3` dan `1.0.0.3` yang secara otomatis memblokir malware dan domain konten dewasa di tingkat jaringan.
+   - Diaktifkan secara permanen via `/system/etc/install-recovery-2.sh` menggunakan aturan `iptables` DNS redirection pada port 53.
+3. **Penguncian Ekstensi Versi 99**:
+   - Ekstensi yang telah difilter dikunci pada versi 99 di `manifest.json` agar tidak tertimpa oleh pembaruan otomatis repositori online.
+
+
+
 
 
 
