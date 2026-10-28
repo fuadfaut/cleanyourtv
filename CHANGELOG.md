@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - **Multi-Layered Family Protection & Vulgar Content Filtering**:
-  - **Smart Extension Filter**: Injected bytecode filters into `Idlix`, `LK21`, and `PusatFilm` extensions that automatically detect and drop adult/vulgar keywords (e.g. `18+`, `semi`, `erotic`, `adult`, `sensual`, `sex`, `bokep`, `porno`, `ecchi`, `hentai`, `vulgar`, `xxx`, `uncensored`, `jav`, `fetish`, `lust`, `orgasm`, `taboo`, `seduction`, `bikini`, `stripper`, `playboy`) from Home sections, search results, and category feeds.
+  - **Smart Extension Filter**: Injected bytecode filters into `Idlix`, `LK21`, `PusatFilm`, and `MovieBox` extensions that automatically detect and drop adult/vulgar keywords (e.g. `18+`, `semi`, `erotic`, `adult`, `sensual`, `sex`, `sexy`, `bokep`, `porno`, `ecchi`, `hentai`, `vulgar`, `xxx`, `uncensored`, `jav`, `fetish`, `lust`, `orgasm`, `taboo`, `seduction`, `bikini`, `stripper`, `playboy`, `nude`, `naked`, `unrated`) from Home sections, search results, and category feeds.
   - **Network-Level Cloudflare Family DNS**: Configured system DNS to `1.1.1.3` and `1.0.0.3` (Cloudflare 1.1.1.3 for Families) in `/system/etc/install-recovery-2.sh` with iptables port 53 NAT redirection to block malware and adult websites at the network socket level.
 
 ### Fixed

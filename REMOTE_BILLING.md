@@ -210,8 +210,8 @@ Untuk mempermudah pengisian repositori tanpa repot mengetik di TV, gunakan fitur
 ### E. Fitur Perlindungan Keluarga & Penyaringan Konten Vulgar / 18+
 Untuk menjaga keamanan tayangan pada STB keluarga atau anak-anak, telah diterapkan sistem proteksi berlapis:
 1. **Smart Extension Keyword & Genre Filter**:
-   - Ekstensi streaming utama (`Idlix`, `LK21`, dan `PusatFilm`) telah disuntikkan filter biner cerdas pada fungsi pengurai respon (`toSearchResponse` dan `getApiSection`).
-   - Setiap judul, URL/slug, atau tag yang mengandung kata kunci dewasa/vulgar (seperti: `18+`, `semi`, `dewasa`, `erotic`, `erotis`, `adult`, `sensual`, `sex`, `bokep`, `porno`, `porn`, `ecchi`, `hentai`, `vulgar`, `xxx`, `uncensored`, `jav`, `fetish`, `lust`, `orgasm`, `taboo`, `seduction`, `bikini`, `stripper`, `playboy`) akan **otomatis dieliminasi (dibuang)** dari tampilan Beranda dan hasil Pencarian.
+   - Ekstensi streaming utama (`Idlix`, `LK21`, `PusatFilm`, dan `MovieBox`) telah disuntikkan filter biner cerdas pada fungsi pengurai respon (`toSearchResponse`, `getApiSection`, dan `toSearchResponseFromSubject`).
+   - Setiap judul, URL/slug, atau tag yang mengandung kata kunci dewasa/vulgar (seperti: `18+`, `semi`, `dewasa`, `erotic`, `erotis`, `adult`, `sensual`, `sex`, `sexy`, `bokep`, `porno`, `porn`, `ecchi`, `hentai`, `vulgar`, `xxx`, `uncensored`, `jav`, `fetish`, `lust`, `orgasm`, `taboo`, `seduction`, `bikini`, `stripper`, `playboy`, `nude`, `naked`, `unrated`) akan **otomatis dieliminasi (dibuang)** dari tampilan Beranda dan hasil Pencarian.
 2. **DNS Tingkat Jaringan (Cloudflare 1.1.1.3 Family Protection)**:
    - STB dikonfigurasikan menggunakan DNS `1.1.1.3` dan `1.0.0.3` yang secara otomatis memblokir malware dan domain konten dewasa di tingkat jaringan.
    - Diaktifkan secara permanen via `/system/etc/install-recovery-2.sh` menggunakan aturan `iptables` DNS redirection pada port 53.
